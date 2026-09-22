@@ -1,62 +1,32 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Đăng nhập - UTEShop</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" th:href="@{/css/app.css}">
-</head>
-<body class="auth-page">
-<div class="auth-card">
-    <h1 style="text-align: center; color: #1d4ed8; margin-bottom: 6px;">UTEShop</h1>
-    <h2 style="text-align: center; margin-top: 0; color: #334155; font-size: 20px;">Đăng nhập</h2>
-
-    <div th:if="${param.error}" class="alert error">
-        <p style="margin: 0; color: #dc2626; font-weight: 500;">
-            Username/email hoặc password không đúng
-        </p>
-    </div>
-
-    <div th:if="${param.logout}" class="alert success">
-        <p style="margin: 0; color: #16a34a; font-weight: 500;">
-            Bạn đã đăng xuất thành công
-        </p>
-    </div>
-
-    <form th:action="@{/login}" method="post">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-        <div style="margin-bottom: 14px;">
-            <label style="display: block; margin-bottom: 6px; font-weight: 600; color: #374151;">
-                Username hoặc Email
-            </label>
-            <input type="text"
-                   name="username"
-                   placeholder="Username hoặc email"
-                   required
-                   autofocus
-                   style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px;">
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/layout :: head('Đăng nhập')}"></head>
+<body>
+<div class="auth-page">
+    <div class="auth-card">
+        <h1>Đăng nhập</h1>
+        <div th:if="${param.error}" class="alert error">
+            Username/password không đúng hoặc tài khoản chưa được xác thực.
         </div>
-
-        <div style="margin-bottom: 18px;">
-            <label style="display: block; margin-bottom: 6px; font-weight: 600; color: #374151;">
-                Mật khẩu
-            </label>
-            <input type="password"
-                   name="password"
-                   placeholder="Mật khẩu"
-                   required
-                   style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px;">
+        <div th:if="${param.logout}" class="alert success">
+            Bạn đã đăng xuất.
         </div>
+        <div th:if="${success}" class="alert success" th:text="${success}"></div>
+        <form th:action="@{/login}" method="post">
+            <label>Username</label>
+            <input name="username" required autofocus>
 
-        <button type="submit" class="btn primary full" style="width: 100%; padding: 10px; font-size: 15px; font-weight: 600;">
-            Đăng nhập
-        </button>
-    </form>
+            <label>Password</label>
+            <input type="password" name="password" required>
 
-    <div style="margin-top: 22px; font-size: 13px; color: #64748b; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px dashed #cbd5e1; line-height: 1.6;">
-        <div style="font-weight: 600; color: #1e293b; margin-bottom: 4px;">Tài khoản mẫu:</div>
-        <div>👤 User: <code>user01</code> (hoặc <code>user01@gmail.com</code>) / <code>123456</code></div>
-        <div>🔑 Admin: <code>trungnh@hcmute.edu.vn</code> (hoặc <code>admin</code>) / <code>123456</code></div>
+            <button class="button full" type="submit">Đăng nhập</button>
+        </form>
+        <p>
+            <a th:href="@{/register}">Tạo tài khoản</a>
+        </p>
+        <p>
+            <a th:href="@{/forgot-password}">Quên mật khẩu?</a>
+        </p>
     </div>
 </div>
 </body>

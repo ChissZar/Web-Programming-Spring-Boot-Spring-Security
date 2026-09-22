@@ -1,52 +1,28 @@
 <!DOCTYPE html>
-<html lang="vi"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
-<head>
-    <title>Trang chủ</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/layout :: head('Dashboard')}"></head>
 <body>
-<main layout:fragment="content">
-    <div class="card" style="margin-top: 30px; padding: 28px; background: white; border-radius: 14px; box-shadow: 0 4px 18px rgba(0,0,0,.06);">
-        <h1 style="color: #1e293b; margin-top: 0; font-size: 26px;">Trang chủ UTEShop</h1>
-        <p style="font-size: 18px; color: #334155;">
-            Xin chào <strong th:text="${#authentication.principal.fullName}" style="color: #2563eb;">User</strong>
-        </p>
-
-        <div style="margin-top: 20px; padding: 14px 18px; background: #ecfdf5; border-left: 4px solid #10b981; border-radius: 6px;">
-            <p style="margin: 0; color: #065f46; font-size: 15px;">
-                ✅ Đăng nhập thành công với quyền:
-                <strong th:text="${#authentication.principal.role}">ROLE_USER</strong>
-            </p>
+<div th:replace="~{layouts/layout :: page(~{::main})}">
+<main>
+    <h1>Dashboard</h1>
+    <div th:if="${success}" class="alert success" th:text="${success}"></div>
+    <div class="cards">
+        <div class="card">
+            <h3>Total Users</h3>
+            <strong th:text="${userCount}">0</strong>
         </div>
-
-        <div style="margin-top: 24px; background: #f8fafc; padding: 18px; border-radius: 10px; border: 1px solid #e2e8f0;">
-            <h3 style="margin-top: 0; color: #334155;">Thông tin chi tiết từ CustomUserDetails:</h3>
-            <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-                <tr style="border-bottom: 1px solid #e2e8f0;">
-                    <td style="padding: 8px 0; font-weight: 600; width: 180px; color: #64748b;">User ID:</td>
-                    <td th:text="${#authentication.principal.id}" style="color: #1e293b;">1</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #e2e8f0;">
-                    <td style="padding: 8px 0; font-weight: 600; color: #64748b;">Username:</td>
-                    <td th:text="${#authentication.principal.username}" style="color: #1e293b;">user01</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #e2e8f0;">
-                    <td style="padding: 8px 0; font-weight: 600; color: #64748b;">Email:</td>
-                    <td th:text="${#authentication.principal.email}" style="color: #1e293b;">user01@gmail.com</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #e2e8f0;">
-                    <td style="padding: 8px 0; font-weight: 600; color: #64748b;">Họ và tên:</td>
-                    <td th:text="${#authentication.principal.fullName}" style="color: #1e293b;">Nguyễn Phước Minh Triết</td>
-                </tr>
-                <tr>
-                    <td style="padding: 8px 0; font-weight: 600; color: #64748b;">Đường dẫn Avatar:</td>
-                    <td th:text="${#authentication.principal.images}" style="color: #1e293b;">/images/user.png</td>
-                </tr>
-            </table>
+        <div class="card">
+            <h3>Total Products</h3>
+            <strong th:text="${productCount}">0</strong>
         </div>
     </div>
+    <div class="quick-links">
+        <a class="button" th:href="@{/products}">Quản lý Products</a>
+        <a class="button"
+           th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+           th:href="@{/users}">Quản lý Users</a>
+    </div>
 </main>
+</div>
 </body>
 </html>

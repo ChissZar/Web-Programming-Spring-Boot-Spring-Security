@@ -1,6 +1,6 @@
 package vn.iotstar.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,10 +10,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LoginDTO {
+public class ResetPasswordDTO {
     @NotBlank
-    private String username;
+    @Email
+    private String email;
 
     @NotBlank
+    @Size(min = 6)
     private String password;
+
+    @NotBlank
+    private String confirmPassword;
 }
